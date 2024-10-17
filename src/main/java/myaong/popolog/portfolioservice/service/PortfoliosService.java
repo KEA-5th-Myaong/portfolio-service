@@ -79,4 +79,16 @@ public class PortfoliosService {
 
 		return new PortfolioIdResponse(1L);
 	}
+
+	public void updatePortfolioMain(Long portfolioId) {
+	}
+
+	public void updatePortfolioMemo(Long portfolioId) {
+	}
+
+	public void updatePortfolio(Long portfolioId, PortfolioRequest portfolioRequest) {
+	}
+
+	public void deletePortfolio(Long portfolioId) {
+	}
 }

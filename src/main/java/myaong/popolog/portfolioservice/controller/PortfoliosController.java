@@ -41,4 +41,37 @@ public class PortfoliosController {
 
 		return ResponseEntity.ok(ApiResponse.onSuccess(res));
 	}
+
+	@PutMapping("/{portfolioId}/main")
+	public ResponseEntity<ApiResponse<Object>> updatePortfolioMain(@PathVariable Long portfolioId) {
+
+		portfoliosService.updatePortfolioMain(portfolioId);
+
+		return ResponseEntity.ok(ApiResponse.onSuccess(null));
+	}
+
+	@PostMapping("/{portfolioId}/memo")
+	public ResponseEntity<ApiResponse<Object>> updatePortfolioMemo(@PathVariable Long portfolioId) {
+
+		portfoliosService.updatePortfolioMemo(portfolioId);
+
+		return ResponseEntity.ok(ApiResponse.onSuccess(null));
+	}
+
+	@PutMapping("/{portfolioId}")
+	public ResponseEntity<ApiResponse<Object>> updatePortfolio(@PathVariable Long portfolioId,
+															   @Valid @RequestBody PortfolioRequest portfolioRequest) {
+
+		portfoliosService.updatePortfolio(portfolioId, portfolioRequest);
+
+		return ResponseEntity.ok(ApiResponse.onSuccess(null));
+	}
+
+	@DeleteMapping("/{portfolioId}")
+	public ResponseEntity<ApiResponse<Object>> deletePortfolio(@PathVariable Long portfolioId) {
+
+		portfoliosService.deletePortfolio(portfolioId);
+
+		return ResponseEntity.ok(ApiResponse.onSuccess(null));
+	}
 }
