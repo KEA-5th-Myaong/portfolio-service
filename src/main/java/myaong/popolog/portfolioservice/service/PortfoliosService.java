@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import myaong.popolog.portfolioservice.common.exception.ApiCode;
 import myaong.popolog.portfolioservice.common.exception.ApiException;
 import myaong.popolog.portfolioservice.dto.PortfolioContent;
+import myaong.popolog.portfolioservice.dto.request.PortfolioRequest;
+import myaong.popolog.portfolioservice.dto.response.PortfolioIdResponse;
 import myaong.popolog.portfolioservice.dto.response.PortfolioResponse;
 import myaong.popolog.portfolioservice.dto.response.PortfoliosResponse;
 import myaong.popolog.portfolioservice.entity.Portfolio;
@@ -71,5 +73,10 @@ public class PortfoliosService {
 		}
 
 		return new PortfolioResponse(portfolio.getTitle(), portfolio.getPreferredJob(), portfolioContent);
+	}
+
+	public PortfolioIdResponse createPortfolio(PortfolioRequest portfolioRequest) {
+
+		return new PortfolioIdResponse(1L);
 	}
 }
