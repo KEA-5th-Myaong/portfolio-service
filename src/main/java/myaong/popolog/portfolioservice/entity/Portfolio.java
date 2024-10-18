@@ -36,8 +36,7 @@ public class Portfolio extends BaseEntity {
 	private String preferredJob;
 
 	// 전체 내용 JSON
-	@Lob
-	@Column(name = "content", nullable = false)
+	@Column(name = "content", nullable = false, columnDefinition = "text")
 	private String content;
 
 	// 공유 키
