@@ -1,5 +1,6 @@
 package myaong.popolog.portfolioservice.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import myaong.popolog.portfolioservice.common.exception.ApiResponse;
@@ -18,6 +19,7 @@ public class PortfoliosController {
 
 	private final PortfoliosService portfoliosService;
 
+	@Operation(summary = "API 명세서 v0.3 line 72", description = "포트폴리오 목록 조회")
 	@GetMapping
 	public ResponseEntity<ApiResponse<PortfoliosResponse>> getPortfolios() {
 
@@ -26,6 +28,7 @@ public class PortfoliosController {
 		return ResponseEntity.ok(ApiResponse.onSuccess(res));
 	}
 
+	@Operation(summary = "API 명세서 v0.3 line 73", description = "포트폴리오 조회")
 	@GetMapping("/{portfolioId}")
 	public ResponseEntity<ApiResponse<PortfolioResponse>> getPortfolio(@PathVariable Long portfolioId) {
 
@@ -34,6 +37,7 @@ public class PortfoliosController {
 		return ResponseEntity.ok(ApiResponse.onSuccess(res));
 	}
 
+	@Operation(summary = "API 명세서 v0.3 line 74", description = "포트폴리오 작성")
 	@PostMapping
 	public ResponseEntity<ApiResponse<PortfolioIdResponse>> createPortfolio(@Valid @RequestBody PortfolioRequest portfolioRequest) {
 
@@ -42,6 +46,7 @@ public class PortfoliosController {
 		return ResponseEntity.ok(ApiResponse.onSuccess(res));
 	}
 
+	@Operation(summary = "API 명세서 v0.3 line 77", description = "대표 포트폴리오 설정")
 	@PutMapping("/{portfolioId}/main")
 	public ResponseEntity<ApiResponse<Object>> updatePortfolioMain(@PathVariable Long portfolioId) {
 
@@ -50,6 +55,7 @@ public class PortfoliosController {
 		return ResponseEntity.ok(ApiResponse.onSuccess(null));
 	}
 
+	@Operation(summary = "API 명세서 v0.3 line 78", description = "포트폴리오 메모 등록")
 	@PostMapping("/{portfolioId}/memo")
 	public ResponseEntity<ApiResponse<Object>> updatePortfolioMemo(@PathVariable Long portfolioId) {
 
@@ -58,6 +64,7 @@ public class PortfoliosController {
 		return ResponseEntity.ok(ApiResponse.onSuccess(null));
 	}
 
+	@Operation(summary = "API 명세서 v0.3 line 79", description = "포트폴리오 수정")
 	@PutMapping("/{portfolioId}")
 	public ResponseEntity<ApiResponse<Object>> updatePortfolio(@PathVariable Long portfolioId,
 															   @Valid @RequestBody PortfolioRequest portfolioRequest) {
@@ -67,6 +74,7 @@ public class PortfoliosController {
 		return ResponseEntity.ok(ApiResponse.onSuccess(null));
 	}
 
+	@Operation(summary = "API 명세서 v0.3 line 80", description = "포트폴리오 삭제")
 	@DeleteMapping("/{portfolioId}")
 	public ResponseEntity<ApiResponse<Object>> deletePortfolio(@PathVariable Long portfolioId) {
 
