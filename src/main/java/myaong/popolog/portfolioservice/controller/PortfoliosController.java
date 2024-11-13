@@ -8,22 +8,24 @@ import myaong.popolog.portfolioservice.dto.request.PortfolioRequest;
 import myaong.popolog.portfolioservice.dto.response.PortfolioIdResponse;
 import myaong.popolog.portfolioservice.dto.response.PortfolioResponse;
 import myaong.popolog.portfolioservice.dto.response.PortfoliosResponse;
+import myaong.popolog.portfolioservice.service.PortfolioQueryService;
 import myaong.popolog.portfolioservice.service.PortfoliosService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/portfolio")
+@RequestMapping("/portfolios")
 @RequiredArgsConstructor
 public class PortfoliosController {
 
+	private final PortfolioQueryService portfolioQueryService;
 	private final PortfoliosService portfoliosService;
 
 	@Operation(summary = "API 명세서 v0.3 line 72", description = "포트폴리오 목록 조회")
 	@GetMapping
-	public ResponseEntity<ApiResponse<PortfoliosResponse>> getPortfolios() {
+	public ResponseEntity<ApiResponse<PortfoliosResponse>> getPortfolios(@RequestHeader(name = "memberId") Long memberId) {
 
-		PortfoliosResponse res = portfoliosService.getPortfolios();
+		PortfoliosResponse res = portfolioQueryService.getPortfolios(memberId);
 
 		return ResponseEntity.ok(ApiResponse.onSuccess(res));
 	}
