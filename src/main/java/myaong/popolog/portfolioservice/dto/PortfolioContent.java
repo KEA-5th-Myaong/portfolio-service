@@ -17,7 +17,7 @@ public class PortfolioContent {
 	private List<PortfolioResponse.Experience> experiences;
 	private String picUrl;
 	private PortfolioResponse.Ps ps;
-	private List<String> links;
+	private List<Link> links;
 	private List<String> skills;
 	private List<PortfolioResponse.Certification> certifications;
 	private List<PortfolioResponse.ExtraActivity> extraActivities;
@@ -44,8 +44,17 @@ public class PortfolioContent {
 	@Getter
 	public static class Ps {
 
+		private String title;
+		private String position;
 		private String reason;
 		private String content;
+	}
+
+	@Getter
+	public static class Link {
+
+		private String name;
+		private String link;
 	}
 
 	@Getter
