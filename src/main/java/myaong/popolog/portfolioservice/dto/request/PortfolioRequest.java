@@ -2,10 +2,10 @@ package myaong.popolog.portfolioservice.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import myaong.popolog.portfolioservice.dto.PortfolioContent;
+import myaong.popolog.portfolioservice.dto.PortfolioContentDTO;
 
 @Getter
-public class PortfolioRequest extends PortfolioContent {
+public class PortfolioRequest extends PortfolioContentDTO {
 
 	@NotNull
 	private String title;

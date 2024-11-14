@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PortfolioContent {
+public class PortfolioContentDTO {
 
 	private String tel;
 	private String email;
@@ -74,17 +74,17 @@ public class PortfolioContent {
 		private String description;
 	}
 
-	protected PortfolioContent(PortfolioContent portfolioContent) {
+	protected PortfolioContentDTO(PortfolioContentDTO portfolioContentDTO) {
 
-		this.tel = portfolioContent.getTel();
-		this.email = portfolioContent.getEmail();
-		this.educations = portfolioContent.getEducations();
-		this.experiences = portfolioContent.getExperiences();
-		this.picUrl = portfolioContent.getPicUrl();
-		this.ps = portfolioContent.getPs();
-		this.links = portfolioContent.getLinks();
-		this.skills = portfolioContent.getSkills();
-		this.certifications = portfolioContent.getCertifications();
-		this.extraActivities = portfolioContent.getExtraActivities();
+		this.tel = portfolioContentDTO.getTel();
+		this.email = portfolioContentDTO.getEmail();
+		this.educations = portfolioContentDTO.getEducations();
+		this.experiences = portfolioContentDTO.getExperiences();
+		this.picUrl = portfolioContentDTO.getPicUrl();
+		this.ps = portfolioContentDTO.getPs();
+		this.links = portfolioContentDTO.getLinks();
+		this.skills = portfolioContentDTO.getSkills();
+		this.certifications = portfolioContentDTO.getCertifications();
+		this.extraActivities = portfolioContentDTO.getExtraActivities();
 	}
 }
