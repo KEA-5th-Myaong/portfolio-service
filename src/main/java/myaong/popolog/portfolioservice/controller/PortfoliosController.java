@@ -32,9 +32,10 @@ public class PortfoliosController {
 
 	@Operation(summary = "API 명세서 v0.3 line 73", description = "포트폴리오 조회")
 	@GetMapping("/{portfolioId}")
-	public ResponseEntity<ApiResponse<PortfolioResponse>> getPortfolio(@PathVariable Long portfolioId) {
+	public ResponseEntity<ApiResponse<PortfolioResponse>> getPortfolio(@RequestHeader(name = "memberId") Long memberId,
+																	   @PathVariable Long portfolioId) {
 
-		PortfolioResponse res = portfoliosService.getPortfolio(1L);
+		PortfolioResponse res = portfolioQueryService.getPortfolio(memberId, portfolioId);
 
 		return ResponseEntity.ok(ApiResponse.onSuccess(res));
 	}

@@ -1,9 +1,13 @@
 package myaong.popolog.portfolioservice.converter;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import myaong.popolog.portfolioservice.common.exception.ApiCode;
+import myaong.popolog.portfolioservice.common.exception.ApiException;
+import myaong.popolog.portfolioservice.dto.PortfolioContentDTO;
 import myaong.popolog.portfolioservice.dto.response.PortfoliosResponse;
 import myaong.popolog.portfolioservice.entity.Portfolio;
-import myaong.popolog.portfolioservice.repository.PortfolioRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,8 +16,6 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class PortfolioConverter {
-
-	private final PortfolioRepository portfolioRepository;
 
 	public PortfoliosResponse toPortfoliosResponse(Portfolio mainPortfolio, List<Portfolio> subPortfolios) {
 
@@ -41,5 +43,15 @@ public class PortfolioConverter {
 				.main(main)
 				.portfolios(portfolios)
 				.build();
+	}
+
+	public PortfolioContentDTO toPortfolioContentDTO(Portfolio portfolio) {
+
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.readValue(portfolio.getContent(), PortfolioContentDTO.class);
+		} catch (JsonProcessingException e) {
+			throw new ApiException(ApiCode.DB_ERROR);
+		}
 	}
 }
