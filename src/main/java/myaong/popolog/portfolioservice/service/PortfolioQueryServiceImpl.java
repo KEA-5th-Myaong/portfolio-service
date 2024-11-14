@@ -22,7 +22,8 @@ public class PortfolioQueryServiceImpl implements PortfolioQueryService {
 	private final PortfolioRepository portfolioRepository;
 	private final PortfolioConverter portfolioConverter;
 
-	private Portfolio findById(Long portfolioId) {
+	@Override
+	public Portfolio findById(Long portfolioId) {
 		return portfolioRepository.findById(portfolioId)
 				.orElseThrow(() -> new ApiException(ApiCode.PORTFOLIO_NOT_FOUND));
 	}
