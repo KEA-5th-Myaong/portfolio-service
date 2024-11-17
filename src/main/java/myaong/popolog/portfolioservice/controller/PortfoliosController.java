@@ -8,6 +8,7 @@ import myaong.popolog.portfolioservice.dto.request.PortfolioRequest;
 import myaong.popolog.portfolioservice.dto.response.PortfolioIdResponse;
 import myaong.popolog.portfolioservice.dto.response.PortfolioResponse;
 import myaong.popolog.portfolioservice.dto.response.PortfoliosResponse;
+import myaong.popolog.portfolioservice.service.PortfolioCommandService;
 import myaong.popolog.portfolioservice.service.PortfolioQueryService;
 import myaong.popolog.portfolioservice.service.PortfoliosService;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class PortfoliosController {
 
 	private final PortfolioQueryService portfolioQueryService;
+	private final PortfolioCommandService portfolioCommandService;
 	private final PortfoliosService portfoliosService;
 
 	@Operation(summary = "API 명세서 v0.3 line 72", description = "포트폴리오 목록 조회")
@@ -42,9 +44,10 @@ public class PortfoliosController {
 
 	@Operation(summary = "API 명세서 v0.3 line 74", description = "포트폴리오 작성")
 	@PostMapping
-	public ResponseEntity<ApiResponse<PortfolioIdResponse>> createPortfolio(@Valid @RequestBody PortfolioRequest portfolioRequest) {
+	public ResponseEntity<ApiResponse<PortfolioIdResponse>> createPortfolio(@RequestHeader(name = "memberId") Long memberId,
+																			@Valid @RequestBody PortfolioRequest portfolioRequest) {
 
-		PortfolioIdResponse res = portfoliosService.createPortfolio(portfolioRequest);
+		PortfolioIdResponse res = portfolioCommandService.createPortfolio(memberId, portfolioRequest);
 
 		return ResponseEntity.ok(ApiResponse.onSuccess(res));
 	}

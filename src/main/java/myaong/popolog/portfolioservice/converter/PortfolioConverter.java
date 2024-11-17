@@ -6,10 +6,12 @@ import lombok.RequiredArgsConstructor;
 import myaong.popolog.portfolioservice.common.exception.ApiCode;
 import myaong.popolog.portfolioservice.common.exception.ApiException;
 import myaong.popolog.portfolioservice.dto.PortfolioContentDTO;
+import myaong.popolog.portfolioservice.dto.request.PortfolioRequest;
 import myaong.popolog.portfolioservice.dto.response.PortfoliosResponse;
 import myaong.popolog.portfolioservice.entity.Portfolio;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,5 +55,29 @@ public class PortfolioConverter {
 		} catch (JsonProcessingException e) {
 			throw new ApiException(ApiCode.DB_ERROR);
 		}
+	}
+
+	private String toPortfolio_Content(PortfolioContentDTO portfolioContent) {
+
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.writeValueAsString(portfolioContent);
+		} catch (JsonProcessingException e) {
+			throw new ApiException(ApiCode.DB_ERROR);
+		}
+	}
+
+	public Portfolio toPortfolio(Long memberId, PortfolioRequest portfolioRequest, Boolean isMain) {
+
+		return Portfolio.builder()
+				.memberId(memberId)
+				.isMain(isMain)
+				.memo("")
+				.title(portfolioRequest.getTitle())
+				.preferredJob(portfolioRequest.getPreferredJob())
+				.content(toPortfolio_Content(portfolioRequest))
+				//FIXME: 일단은 key에 epoch time을 넣었습니다
+				.key(Long.toString(Instant.now().toEpochMilli()))
+				.build();
 	}
 }

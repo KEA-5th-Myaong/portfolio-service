@@ -8,4 +8,5 @@ import java.util.List;
 public interface PortfolioRepository extends JpaRepository<Portfolio, Long> {
 
 	List<Portfolio> findByMemberIdAndIsMain(Long memberId, Boolean isMain);
+	Long countByMemberId(Long memberId);
 }
