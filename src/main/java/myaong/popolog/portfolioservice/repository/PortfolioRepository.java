@@ -7,6 +7,9 @@ import java.util.List;
 
 public interface PortfolioRepository extends JpaRepository<Portfolio, Long> {
 
+	Boolean existsByIdAndMemberId(Long portfolioId, Long memberId);
+
 	List<Portfolio> findByMemberIdAndIsMain(Long memberId, Boolean isMain);
+
 	Long countByMemberId(Long memberId);
 }

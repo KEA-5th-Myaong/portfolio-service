@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import myaong.popolog.portfolioservice.common.exception.ApiResponse;
 import myaong.popolog.portfolioservice.dto.request.PortfolioRequest;
+import myaong.popolog.portfolioservice.dto.response.PicUrlResponse;
 import myaong.popolog.portfolioservice.dto.response.PortfolioIdResponse;
 import myaong.popolog.portfolioservice.dto.response.PortfolioResponse;
 import myaong.popolog.portfolioservice.dto.response.PortfoliosResponse;
@@ -13,6 +14,7 @@ import myaong.popolog.portfolioservice.service.PortfolioQueryService;
 import myaong.popolog.portfolioservice.service.PortfoliosService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/portfolios")
@@ -48,6 +50,17 @@ public class PortfoliosController {
 																			@Valid @RequestBody PortfolioRequest portfolioRequest) {
 
 		PortfolioIdResponse res = portfolioCommandService.createPortfolio(memberId, portfolioRequest);
+
+		return ResponseEntity.ok(ApiResponse.onSuccess(res));
+	}
+
+	@Operation(summary = "API 명세서 v0.4 line 76", description = "포트폴리오 이미지 등록")
+	@PostMapping("/{portfolioId}/pic")
+	public ResponseEntity<ApiResponse<PicUrlResponse>> storePicture(@RequestHeader(name = "memberId") Long memberId,
+																	@PathVariable Long portfolioId,
+																	@RequestParam(value = "pic") MultipartFile pic) {
+
+		PicUrlResponse res = portfolioCommandService.storeImage(memberId, portfolioId, pic);
 
 		return ResponseEntity.ok(ApiResponse.onSuccess(res));
 	}

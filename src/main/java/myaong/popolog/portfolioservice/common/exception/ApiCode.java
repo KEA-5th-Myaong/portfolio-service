@@ -19,6 +19,7 @@ public enum ApiCode {
 	KEY_INVALID(HttpStatus.FORBIDDEN, "PORT_4030", " 잘못된 키입니다. URL을 다시 확인해주세요."),
 	PORTFOLIO_NOT_FOUND(HttpStatus.NOT_FOUND, "PORT_4040", "존재하지 않는 포트폴리오입니다."),
 	PORTFOLIO_LIMIT_EXCEEDED(HttpStatus.CONFLICT, "PORT_4090", "You cannot add more then 5 portfolios."),
+	UNSUPPORTED_MEDIA_TYPE(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "PORT_4150", "Unsupported Media Type"),
 	;
 
 	private final HttpStatus httpStatus;
