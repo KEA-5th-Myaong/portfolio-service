@@ -14,6 +14,7 @@ public enum ApiCode {
 	METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, "COMMON_4050", "Method not allowed"),
 	INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "COMMON_5000", "Internal Server Error"),
 	DB_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "COMMON_5001", "DB Error"),
+	OBJECT_STORAGE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "COMMON_5002", "Object Storage Error"),
 
 	KEY_INVALID(HttpStatus.FORBIDDEN, "PORT_4030", " 잘못된 키입니다. URL을 다시 확인해주세요."),
 	PORTFOLIO_NOT_FOUND(HttpStatus.NOT_FOUND, "PORT_4040", "존재하지 않는 포트폴리오입니다."),
