@@ -12,4 +12,6 @@ public interface PortfolioCommandService {
 	PortfolioIdResponse createPortfolio(Long memberId, PortfolioRequest portfolioRequest);
 
 	PicUrlResponse storeImage(Long memberId, Long portfolioId, MultipartFile pic);
+
+	void deleteImage(Long memberId, Long portfolioId, String picUrl);
 }

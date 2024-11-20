@@ -17,8 +17,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class S3ApiService {
 
-	private final String TEMP_BUCKET_NAME = "temp-storage";
-	private final String PERSISTENT_BUCKET_NAME = "persistent-storage";
+	public static final String TEMP_BUCKET_NAME = "temp-storage";
+	public static final String PERSISTENT_BUCKET_NAME = "persistent-storage";
 	private final S3Client s3Client;
 
 	/**

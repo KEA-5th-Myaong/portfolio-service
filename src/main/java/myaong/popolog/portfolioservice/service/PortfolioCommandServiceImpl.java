@@ -54,4 +54,16 @@ public class PortfolioCommandServiceImpl implements PortfolioCommandService {
 		String imageUrl = s3ApiService.uploadToTempStorage(Prefix.PORTFOLIO, pic);
 		return new PicUrlResponse(imageUrl);
 	}
+
+	@Override
+	public void deleteImage(Long memberId, Long portfolioId, String picUrl) {
+
+		validByIdAndMemberId(portfolioId, memberId);
+
+		// picUrl에서 key만 추출
+		String bucketName = S3ApiService.PERSISTENT_BUCKET_NAME;
+		String key = picUrl.substring(picUrl.lastIndexOf(bucketName) + bucketName.length() + 1);
+
+		s3ApiService.deleteFromPersistentStorage(key);
+	}
 }

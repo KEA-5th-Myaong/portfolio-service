@@ -65,6 +65,17 @@ public class PortfoliosController {
 		return ResponseEntity.ok(ApiResponse.onSuccess(res));
 	}
 
+	@Operation(summary = "API 명세서 v0.4 line 77", description = "포트폴리오 이미지 삭제")
+	@DeleteMapping("/{portfolioId}/pic")
+	public ResponseEntity<ApiResponse<Object>> deletePicture(@RequestHeader(name = "memberId") Long memberId,
+															 @PathVariable Long portfolioId,
+															 @RequestParam(value = "picUrl") String picUrl) {
+
+		portfolioCommandService.deleteImage(memberId, portfolioId, picUrl);
+
+		return ResponseEntity.ok(ApiResponse.onSuccess(null));
+	}
+
 	@Operation(summary = "API 명세서 v0.3 line 77", description = "대표 포트폴리오 설정")
 	@PutMapping("/{portfolioId}/main")
 	public ResponseEntity<ApiResponse<Object>> updatePortfolioMain(@PathVariable Long portfolioId) {
