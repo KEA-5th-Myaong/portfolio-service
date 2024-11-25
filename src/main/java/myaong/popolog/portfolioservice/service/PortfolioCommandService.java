@@ -7,11 +7,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface PortfolioCommandService {
 
-	void validByIdAndMemberId(Long portfolioId, Long memberId);
-
 	PortfolioIdResponse createPortfolio(Long memberId, PortfolioRequest portfolioRequest);
 
 	PicUrlResponse storeImage(MultipartFile pic);
 
 	void deleteImage(String picUrl);
+
+	void updatePortfolioMain(Long memberId, Long portfolioId);
 }

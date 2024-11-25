@@ -6,7 +6,9 @@ import myaong.popolog.portfolioservice.entity.Portfolio;
 
 public interface PortfolioQueryService {
 
-	Portfolio findById(Long portfolioId);
+	Portfolio findByIdAndMemberId(Long portfolioId, Long memberId);
+
 	PortfoliosResponse getPortfolios(Long memberId);
+
 	PortfolioResponse getPortfolio(Long memberId, Long portfolioId);
 }

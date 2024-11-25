@@ -23,8 +23,8 @@ public class PortfolioQueryServiceImpl implements PortfolioQueryService {
 	private final PortfolioConverter portfolioConverter;
 
 	@Override
-	public Portfolio findById(Long portfolioId) {
-		return portfolioRepository.findById(portfolioId)
+	public Portfolio findByIdAndMemberId(Long portfolioId, Long memberId) {
+		return portfolioRepository.findByIdAndMemberId(portfolioId, memberId)
 				.orElseThrow(() -> new ApiException(ApiCode.PORTFOLIO_NOT_FOUND));
 	}
 
@@ -40,7 +40,7 @@ public class PortfolioQueryServiceImpl implements PortfolioQueryService {
 	@Override
 	public PortfolioResponse getPortfolio(Long memberId, Long portfolioId) {
 
-		Portfolio portfolio = findById(portfolioId);
+		Portfolio portfolio = findByIdAndMemberId(portfolioId, memberId);
 
 		PortfolioContentDTO portfolioContent = portfolioConverter.toPortfolioContentDTO(portfolio);
 
