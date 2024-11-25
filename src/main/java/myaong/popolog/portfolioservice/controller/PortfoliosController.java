@@ -4,11 +4,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import myaong.popolog.portfolioservice.common.exception.ApiResponse;
+import myaong.popolog.portfolioservice.dto.request.MemoRequest;
 import myaong.popolog.portfolioservice.dto.request.PortfolioRequest;
-import myaong.popolog.portfolioservice.dto.response.PicUrlResponse;
-import myaong.popolog.portfolioservice.dto.response.PortfolioIdResponse;
-import myaong.popolog.portfolioservice.dto.response.PortfolioResponse;
-import myaong.popolog.portfolioservice.dto.response.PortfoliosResponse;
+import myaong.popolog.portfolioservice.dto.response.*;
 import myaong.popolog.portfolioservice.service.PortfolioCommandService;
 import myaong.popolog.portfolioservice.service.PortfolioQueryService;
 import myaong.popolog.portfolioservice.service.PortfoliosService;
@@ -84,9 +82,11 @@ public class PortfoliosController {
 
 	@Operation(summary = "API 명세서 v0.3 line 78", description = "포트폴리오 메모 등록")
 	@PostMapping("/{portfolioId}/memo")
-	public ResponseEntity<ApiResponse<Object>> updatePortfolioMemo(@PathVariable Long portfolioId) {
+	public ResponseEntity<ApiResponse<Object>> updatePortfolioMemo(@RequestHeader(name = "memberId") Long memberId,
+																   @PathVariable Long portfolioId,
+																   @RequestBody MemoRequest req) {
 
-		portfoliosService.updatePortfolioMemo(portfolioId);
+		portfolioCommandService.updatePortfolioMemo(memberId, portfolioId, req);
 
 		return ResponseEntity.ok(ApiResponse.onSuccess(null));
 	}

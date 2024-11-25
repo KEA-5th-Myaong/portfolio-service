@@ -5,6 +5,7 @@ import myaong.popolog.portfolioservice.common.Prefix;
 import myaong.popolog.portfolioservice.common.exception.ApiCode;
 import myaong.popolog.portfolioservice.common.exception.ApiException;
 import myaong.popolog.portfolioservice.converter.PortfolioConverter;
+import myaong.popolog.portfolioservice.dto.request.MemoRequest;
 import myaong.popolog.portfolioservice.dto.request.PortfolioRequest;
 import myaong.popolog.portfolioservice.dto.response.PicUrlResponse;
 import myaong.popolog.portfolioservice.dto.response.PortfolioIdResponse;
@@ -74,5 +75,19 @@ public class PortfolioCommandServiceImpl implements PortfolioCommandService {
 
 		Portfolio portfolio = portfolioQueryService.findByIdAndMemberId(portfolioId, memberId);
 		portfolio.updateMain(true);
+	}
+
+	@Override
+	public void updatePortfolioMemo(Long memberId, Long portfolioId, MemoRequest req) {
+
+		Portfolio portfolio = portfolioQueryService.findByIdAndMemberId(portfolioId, memberId);
+
+		String memo = req.getMemo();
+
+		if (memo == null || memo.isEmpty()) {
+			portfolio.initializeMemo();
+		} else {
+			portfolio.updateMemo(req.getMemo());
+		}
 	}
 }

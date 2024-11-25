@@ -1,5 +1,6 @@
 package myaong.popolog.portfolioservice.service;
 
+import myaong.popolog.portfolioservice.dto.request.MemoRequest;
 import myaong.popolog.portfolioservice.dto.request.PortfolioRequest;
 import myaong.popolog.portfolioservice.dto.response.PicUrlResponse;
 import myaong.popolog.portfolioservice.dto.response.PortfolioIdResponse;
@@ -14,4 +15,6 @@ public interface PortfolioCommandService {
 	void deleteImage(String picUrl);
 
 	void updatePortfolioMain(Long memberId, Long portfolioId);
+
+	void updatePortfolioMemo(Long memberId, Long portfolioId, MemoRequest req);
 }

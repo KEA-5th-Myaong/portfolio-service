@@ -57,4 +57,12 @@ public class Portfolio extends BaseEntity {
 	public void updateMain(Boolean isMain) {
 		this.isMain = isMain;
 	}
+
+	public void updateMemo(String memo) {
+		this.memo = memo;
+	}
+
+	public void initializeMemo() {
+		this.memo = "";
+	}
 }
