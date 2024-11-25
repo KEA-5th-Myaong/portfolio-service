@@ -11,6 +11,9 @@ public interface PortfolioRepository extends JpaRepository<Portfolio, Long> {
 	Optional<Portfolio> findByIdAndMemberId(Long portfolioId, Long memberId);
 
 	List<Portfolio> findByMemberIdAndIsMain(Long memberId, Boolean isMain);
+	default Portfolio findMainByMemberId(Long memberId) {
+		return findByMemberIdAndIsMain(memberId, true).get(0);
+	}
 
 	Long countByMemberId(Long memberId);
 }

@@ -31,7 +31,7 @@ public class PortfolioQueryServiceImpl implements PortfolioQueryService {
 	@Override
 	public PortfoliosResponse getPortfolios(Long memberId) {
 
-		Portfolio main = portfolioRepository.findByMemberIdAndIsMain(memberId, true).get(0);
+		Portfolio main = portfolioRepository.findMainByMemberId(memberId);
 		List<Portfolio> sub = portfolioRepository.findByMemberIdAndIsMain(memberId, false);
 
 		return portfolioConverter.toPortfoliosResponse(main, sub);
