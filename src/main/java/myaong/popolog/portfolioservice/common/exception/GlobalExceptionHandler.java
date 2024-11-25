@@ -28,7 +28,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	// 커스텀 예외 처리
 	@ExceptionHandler
 	public ResponseEntity<Object> HandleCustomException(ApiException ex) {
-		return handleExceptionInternal(ex.getApiCode());
+		return handleExceptionInternal(ex.getApiCode(), ex.getMessage());
 	}
 
 	// @Valid 검증 예외 처리

@@ -53,7 +53,7 @@ public class PortfolioConverter {
 		try {
 			return mapper.readValue(portfolio.getContent(), PortfolioContentDTO.class);
 		} catch (JsonProcessingException e) {
-			throw new ApiException(ApiCode.DB_ERROR);
+			throw new ApiException(ApiCode.DB_ERROR, "잘못된 형식이 포함된 데이터입니다.");
 		}
 	}
 
@@ -63,7 +63,7 @@ public class PortfolioConverter {
 		try {
 			return mapper.writeValueAsString(portfolioContent);
 		} catch (JsonProcessingException e) {
-			throw new ApiException(ApiCode.DB_ERROR);
+			throw new ApiException(ApiCode.INVALID_DATA);
 		}
 	}
 
