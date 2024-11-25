@@ -65,4 +65,10 @@ public class Portfolio extends BaseEntity {
 	public void initializeMemo() {
 		this.memo = "";
 	}
+
+	public void updatePortfolio(String title, String preferredJob, String content) {
+		this.title = title;
+		this.preferredJob = preferredJob;
+		this.content = content;
+	}
 }

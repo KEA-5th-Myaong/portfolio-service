@@ -57,7 +57,7 @@ public class PortfolioConverter {
 		}
 	}
 
-	private String toPortfolio_Content(PortfolioContentDTO portfolioContent) {
+	public String toPortfolio_Content(PortfolioContentDTO portfolioContent) {
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {

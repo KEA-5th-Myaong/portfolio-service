@@ -36,7 +36,7 @@ public class PortfolioCommandServiceImpl implements PortfolioCommandService {
 
 		// 이미지 URL 변경
 		String tempPicUrl = portfolioRequest.getPicUrl();
-		if (!tempPicUrl.isEmpty()) {
+		if (tempPicUrl != null) {
 			// 이미지를 영구 저장소로 이동
 			String persistentPicUrl = s3ApiService.moveToPersistentStorage(tempPicUrl);
 			// 임시 URL을 영구 저장소의 URL로 변경
@@ -89,5 +89,33 @@ public class PortfolioCommandServiceImpl implements PortfolioCommandService {
 		} else {
 			portfolio.updateMemo(req.getMemo());
 		}
+	}
+
+	@Override
+	public void updatePortfolio(Long memberId, Long portfolioId, PortfolioRequest req) {
+
+		Portfolio portfolio = portfolioQueryService.findByIdAndMemberId(portfolioId, memberId);
+
+		// 기존 이미지 URL이 있다면 이미지 삭제
+		String existedPicUrl = portfolioConverter.toPortfolioContentDTO(portfolio).getPicUrl();
+		if (existedPicUrl != null) {
+			s3ApiService.deleteFromPersistentStorage(existedPicUrl);
+		}
+
+		// 이미지 URL 변경
+		String tempPicUrl = req.getPicUrl();
+		if (tempPicUrl != null) {
+			// 이미지를 영구 저장소로 이동
+			String persistentPicUrl = s3ApiService.moveToPersistentStorage(tempPicUrl);
+			// 임시 URL을 영구 저장소의 URL로 변경
+			req.setPicUrl(persistentPicUrl);
+		}
+
+		// 포트폴리오 수정
+		String content = portfolioConverter.toPortfolio_Content(req);
+		portfolio.updatePortfolio(req.getTitle(), req.getPreferredJob(), content);
+
+		// 수정된 포트폴리오 저장
+		portfolioRepository.save(portfolio);
 	}
 }
