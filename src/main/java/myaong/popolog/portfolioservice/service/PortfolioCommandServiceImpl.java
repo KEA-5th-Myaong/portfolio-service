@@ -34,7 +34,18 @@ public class PortfolioCommandServiceImpl implements PortfolioCommandService {
 
 		// 이미 5개가 다 찼으면 오류 반환
 		Long count = portfolioRepository.countByMemberId(memberId);
-		if (count >= 5) throw new ApiException(ApiCode.PORTFOLIO_LIMIT_EXCEEDED);
+		if (count >= 5) {
+			throw new ApiException(ApiCode.PORTFOLIO_LIMIT_EXCEEDED);
+		}
+
+		// 이미지 URL 변경
+		String tempPicUrl = portfolioRequest.getPicUrl();
+		if (!tempPicUrl.isEmpty()) {
+			// 이미지를 영구 저장소로 이동
+			String persistentPicUrl = s3ApiService.moveToPersistentStorage(tempPicUrl);
+			// 임시 URL을 영구 저장소의 URL로 변경
+			portfolioRequest.setPicUrl(persistentPicUrl);
+		}
 
 		// 만약 기존 portfolio가 하나도 없다면 지금 추가하는 값이 main
 		Boolean isMain = count.equals(0L);

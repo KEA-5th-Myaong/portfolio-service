@@ -2,11 +2,11 @@ package myaong.popolog.portfolioservice.dto;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import myaong.popolog.portfolioservice.dto.response.PortfolioResponse;
 
 import java.util.List;
@@ -23,6 +23,7 @@ public class PortfolioContentDTO {
 	private List<PortfolioResponse.Education> educations;
 	@Valid
 	private List<PortfolioResponse.Experience> experiences;
+	@Setter
 	private String picUrl;
 	@Valid
 	private PortfolioResponse.Ps ps;
