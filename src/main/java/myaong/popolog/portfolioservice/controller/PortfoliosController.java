@@ -74,9 +74,10 @@ public class PortfoliosController {
 
 	@Operation(summary = "API 명세서 v0.3 line 77", description = "대표 포트폴리오 설정")
 	@PutMapping("/{portfolioId}/main")
-	public ResponseEntity<ApiResponse<Object>> updatePortfolioMain(@PathVariable Long portfolioId) {
+	public ResponseEntity<ApiResponse<Object>> updatePortfolioMain(@RequestHeader(name = "memberId") Long memberId,
+																   @PathVariable Long portfolioId) {
 
-		portfoliosService.updatePortfolioMain(portfolioId);
+		portfolioCommandService.updatePortfolioMain(memberId, portfolioId);
 
 		return ResponseEntity.ok(ApiResponse.onSuccess(null));
 	}

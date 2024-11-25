@@ -53,4 +53,8 @@ public class Portfolio extends BaseEntity {
 		this.content = content;
 		this.key = key;
 	}
+
+	public void updateMain(Boolean isMain) {
+		this.isMain = isMain;
+	}
 }

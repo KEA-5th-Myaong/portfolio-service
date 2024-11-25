@@ -19,15 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 @Transactional
 public class PortfolioCommandServiceImpl implements PortfolioCommandService {
 
+	private final PortfolioQueryServiceImpl portfolioQueryService;
 	private final PortfolioRepository portfolioRepository;
 	private final PortfolioConverter portfolioConverter;
 	private final S3ApiService s3ApiService;
-
-	@Override
-	public void validByIdAndMemberId(Long portfolioId, Long memberId) {
-		boolean canAccessPortfolio = portfolioRepository.existsByIdAndMemberId(portfolioId, memberId);
-		if (!canAccessPortfolio) throw new ApiException(ApiCode.PORTFOLIO_NOT_FOUND);
-	}
 
 	@Override
 	public PortfolioIdResponse createPortfolio(Long memberId, PortfolioRequest portfolioRequest) {
@@ -68,5 +63,16 @@ public class PortfolioCommandServiceImpl implements PortfolioCommandService {
 	public void deleteImage(String picUrl) {
 
 		s3ApiService.deleteFromPersistentStorage(picUrl);
+	}
+
+	@Override
+	public void updatePortfolioMain(Long memberId, Long portfolioId) {
+
+		// 기존 메인 포트폴리오는 일반 포트폴리오로 변경
+		Portfolio mainPortfolio = portfolioRepository.findMainByMemberId(memberId);
+		mainPortfolio.updateMain(false);
+
+		Portfolio portfolio = portfolioQueryService.findByIdAndMemberId(portfolioId, memberId);
+		portfolio.updateMain(true);
 	}
 }
