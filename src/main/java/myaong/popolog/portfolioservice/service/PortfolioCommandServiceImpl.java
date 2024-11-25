@@ -47,18 +47,14 @@ public class PortfolioCommandServiceImpl implements PortfolioCommandService {
 	}
 
 	@Override
-	public PicUrlResponse storeImage(Long memberId, Long portfolioId, MultipartFile pic) {
-
-		validByIdAndMemberId(portfolioId, memberId);
+	public PicUrlResponse storeImage(MultipartFile pic) {
 
 		String imageUrl = s3ApiService.uploadToTempStorage(Prefix.PORTFOLIO, pic);
 		return new PicUrlResponse(imageUrl);
 	}
 
 	@Override
-	public void deleteImage(Long memberId, Long portfolioId, String picUrl) {
-
-		validByIdAndMemberId(portfolioId, memberId);
+	public void deleteImage(String picUrl) {
 
 		s3ApiService.deleteFromPersistentStorage(picUrl);
 	}

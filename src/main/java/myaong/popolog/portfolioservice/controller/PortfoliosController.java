@@ -34,7 +34,7 @@ public class PortfoliosController {
 		return ResponseEntity.ok(ApiResponse.onSuccess(res));
 	}
 
-	@Operation(summary = "API 명세서 v0.3 line 73", description = "포트폴리오 조회")
+	@Operation(summary = "API 명세서 v0.4 line 74", description = "포트폴리오 조회")
 	@GetMapping("/{portfolioId}")
 	public ResponseEntity<ApiResponse<PortfolioResponse>> getPortfolio(@RequestHeader(name = "memberId") Long memberId,
 																	   @PathVariable Long portfolioId) {
@@ -44,7 +44,7 @@ public class PortfoliosController {
 		return ResponseEntity.ok(ApiResponse.onSuccess(res));
 	}
 
-	@Operation(summary = "API 명세서 v0.3 line 74", description = "포트폴리오 작성")
+	@Operation(summary = "API 명세서 v0.4 line 75", description = "포트폴리오 작성")
 	@PostMapping
 	public ResponseEntity<ApiResponse<PortfolioIdResponse>> createPortfolio(@RequestHeader(name = "memberId") Long memberId,
 																			@Valid @RequestBody PortfolioRequest portfolioRequest) {
@@ -55,23 +55,19 @@ public class PortfoliosController {
 	}
 
 	@Operation(summary = "API 명세서 v0.4 line 76", description = "포트폴리오 이미지 등록")
-	@PostMapping("/{portfolioId}/pic")
-	public ResponseEntity<ApiResponse<PicUrlResponse>> storePicture(@RequestHeader(name = "memberId") Long memberId,
-																	@PathVariable Long portfolioId,
-																	@RequestParam(value = "pic") MultipartFile pic) {
+	@PostMapping("/pic")
+	public ResponseEntity<ApiResponse<PicUrlResponse>> storePicture(@RequestParam(value = "pic") MultipartFile pic) {
 
-		PicUrlResponse res = portfolioCommandService.storeImage(memberId, portfolioId, pic);
+		PicUrlResponse res = portfolioCommandService.storeImage(pic);
 
 		return ResponseEntity.ok(ApiResponse.onSuccess(res));
 	}
 
 	@Operation(summary = "API 명세서 v0.4 line 77", description = "포트폴리오 이미지 삭제")
-	@DeleteMapping("/{portfolioId}/pic")
-	public ResponseEntity<ApiResponse<Object>> deletePicture(@RequestHeader(name = "memberId") Long memberId,
-															 @PathVariable Long portfolioId,
-															 @RequestParam(value = "picUrl") String picUrl) {
+	@DeleteMapping("/pic")
+	public ResponseEntity<ApiResponse<Object>> deletePicture(@RequestParam(value = "picUrl") String picUrl) {
 
-		portfolioCommandService.deleteImage(memberId, portfolioId, picUrl);
+		portfolioCommandService.deleteImage(picUrl);
 
 		return ResponseEntity.ok(ApiResponse.onSuccess(null));
 	}

@@ -73,7 +73,7 @@ public class S3ApiService {
 		String fileName = UUID.randomUUID() + extension;
 		String key = keyPrefix + "/" + fileName;
 
-		return uploadObject(TEMP_BUCKET_NAME, key, file);
+		return uploadObject(bucketName, key, file);
 	}
 
 	/**
