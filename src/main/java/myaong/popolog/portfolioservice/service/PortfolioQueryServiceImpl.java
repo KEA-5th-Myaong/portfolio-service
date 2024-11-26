@@ -32,7 +32,7 @@ public class PortfolioQueryServiceImpl implements PortfolioQueryService {
 	public PortfoliosResponse getPortfolios(Long memberId) {
 
 		Portfolio main = portfolioRepository.findMainByMemberId(memberId);
-		List<Portfolio> sub = portfolioRepository.findByMemberIdAndIsMain(memberId, false);
+		List<Portfolio> sub = portfolioRepository.findNormalByMemberId(memberId);
 
 		return portfolioConverter.toPortfoliosResponse(main, sub);
 	}
