@@ -19,4 +19,6 @@ public interface PortfolioCommandService {
 	void updatePortfolioMemo(Long memberId, Long portfolioId, MemoRequest req);
 
 	void updatePortfolio(Long memberId, Long portfolioId, PortfolioRequest req);
+
+	void deletePortfolio(Long memberId, Long portfolioId);
 }

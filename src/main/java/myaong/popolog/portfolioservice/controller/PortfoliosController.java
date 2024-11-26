@@ -104,9 +104,10 @@ public class PortfoliosController {
 
 	@Operation(summary = "API 명세서 v0.3 line 80", description = "포트폴리오 삭제")
 	@DeleteMapping("/{portfolioId}")
-	public ResponseEntity<ApiResponse<Object>> deletePortfolio(@PathVariable Long portfolioId) {
+	public ResponseEntity<ApiResponse<Object>> deletePortfolio(@RequestHeader(name = "memberId") Long memberId,
+															   @PathVariable Long portfolioId) {
 
-		portfoliosService.deletePortfolio(portfolioId);
+		portfolioCommandService.deletePortfolio(memberId, portfolioId);
 
 		return ResponseEntity.ok(ApiResponse.onSuccess(null));
 	}

@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -97,10 +99,7 @@ public class PortfolioCommandServiceImpl implements PortfolioCommandService {
 		Portfolio portfolio = portfolioQueryService.findByIdAndMemberId(portfolioId, memberId);
 
 		// 기존 이미지 URL이 있다면 이미지 삭제
-		String existedPicUrl = portfolioConverter.toPortfolioContentDTO(portfolio).getPicUrl();
-		if (existedPicUrl != null) {
-			s3ApiService.deleteFromPersistentStorage(existedPicUrl);
-		}
+		deleteExistedPicUrl(portfolio);
 
 		// 이미지 URL 변경
 		String tempPicUrl = req.getPicUrl();
@@ -117,5 +116,35 @@ public class PortfolioCommandServiceImpl implements PortfolioCommandService {
 
 		// 수정된 포트폴리오 저장
 		portfolioRepository.save(portfolio);
+	}
+
+	@Override
+	public void deletePortfolio(Long memberId, Long portfolioId) {
+
+		Portfolio portfolio = portfolioQueryService.findByIdAndMemberId(portfolioId, memberId);
+
+		// 기존 이미지 URL이 있다면 이미지 삭제
+		deleteExistedPicUrl(portfolio);
+		
+		// 삭제하려는 포트폴리오가 메인 포트폴리오라면
+		if (portfolio.getIsMain().equals(true)) {
+
+			List<Portfolio> portfolios = portfolioRepository.findNormalByMemberId(memberId);
+			// 삭제 이후에도 포트폴리오가 한 개 이상 남는 경우에만 그 중 하나를 메인 포트폴리오로 변경
+			if (portfolios.size() > 1) {
+				Portfolio newMain = portfolios.get(0);
+				newMain.updateMain(true);
+				portfolioRepository.save(newMain);
+			}
+		}
+
+		portfolioRepository.delete(portfolio);
+	}
+
+	private void deleteExistedPicUrl(Portfolio portfolio) {
+		String existedPicUrl = portfolioConverter.toPortfolioContentDTO(portfolio).getPicUrl();
+		if (existedPicUrl != null) {
+			s3ApiService.deleteFromPersistentStorage(existedPicUrl);
+		}
 	}
 }
