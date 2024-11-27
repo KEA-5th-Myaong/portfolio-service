@@ -63,12 +63,6 @@ public class PortfolioCommandServiceImpl implements PortfolioCommandService {
 	}
 
 	@Override
-	public void deleteImage(String picUrl) {
-
-		s3ApiService.deleteFromPersistentStorage(picUrl);
-	}
-
-	@Override
 	public void updatePortfolioMain(Long memberId, Long portfolioId) {
 
 		// 기존 메인 포트폴리오는 일반 포트폴리오로 변경

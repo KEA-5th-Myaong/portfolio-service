@@ -12,8 +12,6 @@ public interface PortfolioCommandService {
 
 	PicUrlResponse storeImage(MultipartFile pic);
 
-	void deleteImage(String picUrl);
-
 	void updatePortfolioMain(Long memberId, Long portfolioId);
 
 	void updatePortfolioMemo(Long memberId, Long portfolioId, MemoRequest req);
