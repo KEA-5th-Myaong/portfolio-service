@@ -7,12 +7,14 @@ import myaong.popolog.portfolioservice.dto.PortfolioContentDTO;
 @Getter
 public class PortfolioResponse extends PortfolioContentDTO {
 
+	private final Long portfolioId;
 	private final String title;
 	private final String preferredJob;
 
 	@Builder
-	public PortfolioResponse(String title, String preferredJob, PortfolioContentDTO portfolioContent) {
+	public PortfolioResponse(Long portfolioId, String title, String preferredJob, PortfolioContentDTO portfolioContent) {
 		super(portfolioContent);
+		this.portfolioId = portfolioId;
 		this.title = title;
 		this.preferredJob = preferredJob;
 	}

@@ -45,6 +45,7 @@ public class PortfolioQueryServiceImpl implements PortfolioQueryService {
 		PortfolioContentDTO portfolioContent = portfolioConverter.toPortfolioContentDTO(portfolio);
 
 		return PortfolioResponse.builder()
+				.portfolioId(portfolioId)
 				.title(portfolio.getTitle())
 				.preferredJob(portfolio.getPreferredJob())
 				.portfolioContent(portfolioContent)
