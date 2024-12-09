@@ -1,16 +1,20 @@
 package myaong.popolog.portfolioservice.dto.response;
 
+import lombok.Builder;
 import lombok.Getter;
-import myaong.popolog.portfolioservice.dto.PortfolioContent;
+import myaong.popolog.portfolioservice.dto.PortfolioContentDTO;
 
 @Getter
-public class PortfolioResponse extends PortfolioContent {
+public class PortfolioResponse extends PortfolioContentDTO {
 
-	private String title;
-	private String preferredJob;
+	private final Long portfolioId;
+	private final String title;
+	private final String preferredJob;
 
-	public PortfolioResponse(String title, String preferredJob, PortfolioContent portfolioContent) {
+	@Builder
+	public PortfolioResponse(Long portfolioId, String title, String preferredJob, PortfolioContentDTO portfolioContent) {
 		super(portfolioContent);
+		this.portfolioId = portfolioId;
 		this.title = title;
 		this.preferredJob = preferredJob;
 	}

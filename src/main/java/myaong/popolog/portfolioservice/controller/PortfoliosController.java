@@ -4,81 +4,99 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import myaong.popolog.portfolioservice.common.exception.ApiResponse;
+import myaong.popolog.portfolioservice.dto.request.MemoRequest;
 import myaong.popolog.portfolioservice.dto.request.PortfolioRequest;
-import myaong.popolog.portfolioservice.dto.response.PortfolioIdResponse;
-import myaong.popolog.portfolioservice.dto.response.PortfolioResponse;
-import myaong.popolog.portfolioservice.dto.response.PortfoliosResponse;
-import myaong.popolog.portfolioservice.service.PortfoliosService;
+import myaong.popolog.portfolioservice.dto.response.*;
+import myaong.popolog.portfolioservice.service.PortfolioCommandService;
+import myaong.popolog.portfolioservice.service.PortfolioQueryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/portfolio")
+@RequestMapping("/portfolios")
 @RequiredArgsConstructor
 public class PortfoliosController {
 
-	private final PortfoliosService portfoliosService;
+	private final PortfolioQueryService portfolioQueryService;
+	private final PortfolioCommandService portfolioCommandService;
 
 	@Operation(summary = "API 명세서 v0.3 line 72", description = "포트폴리오 목록 조회")
 	@GetMapping
-	public ResponseEntity<ApiResponse<PortfoliosResponse>> getPortfolios() {
+	public ResponseEntity<ApiResponse<PortfoliosResponse>> getPortfolios(@RequestHeader(name = "memberId") Long memberId) {
 
-		PortfoliosResponse res = portfoliosService.getPortfolios();
+		PortfoliosResponse res = portfolioQueryService.getPortfolios(memberId);
 
 		return ResponseEntity.ok(ApiResponse.onSuccess(res));
 	}
 
-	@Operation(summary = "API 명세서 v0.3 line 73", description = "포트폴리오 조회")
+	@Operation(summary = "API 명세서 v0.4 line 74", description = "포트폴리오 조회")
 	@GetMapping("/{portfolioId}")
-	public ResponseEntity<ApiResponse<PortfolioResponse>> getPortfolio(@PathVariable Long portfolioId) {
+	public ResponseEntity<ApiResponse<PortfolioResponse>> getPortfolio(@RequestHeader(name = "memberId") Long memberId,
+																	   @PathVariable Long portfolioId) {
 
-		PortfolioResponse res = portfoliosService.getPortfolio(1L);
+		PortfolioResponse res = portfolioQueryService.getPortfolio(memberId, portfolioId);
 
 		return ResponseEntity.ok(ApiResponse.onSuccess(res));
 	}
 
-	@Operation(summary = "API 명세서 v0.3 line 74", description = "포트폴리오 작성")
+	@Operation(summary = "API 명세서 v0.4 line 75", description = "포트폴리오 작성")
 	@PostMapping
-	public ResponseEntity<ApiResponse<PortfolioIdResponse>> createPortfolio(@Valid @RequestBody PortfolioRequest portfolioRequest) {
+	public ResponseEntity<ApiResponse<PortfolioIdResponse>> createPortfolio(@RequestHeader(name = "memberId") Long memberId,
+																			@Valid @RequestBody PortfolioRequest portfolioRequest) {
 
-		PortfolioIdResponse res = portfoliosService.createPortfolio(portfolioRequest);
+		PortfolioIdResponse res = portfolioCommandService.createPortfolio(memberId, portfolioRequest);
+
+		return ResponseEntity.ok(ApiResponse.onSuccess(res));
+	}
+
+	@Operation(summary = "API 명세서 v0.4 line 76", description = "포트폴리오 이미지 등록")
+	@PostMapping("/pic")
+	public ResponseEntity<ApiResponse<PicUrlResponse>> storePicture(@RequestParam(value = "pic") MultipartFile pic) {
+
+		PicUrlResponse res = portfolioCommandService.storeImage(pic);
 
 		return ResponseEntity.ok(ApiResponse.onSuccess(res));
 	}
 
 	@Operation(summary = "API 명세서 v0.3 line 77", description = "대표 포트폴리오 설정")
 	@PutMapping("/{portfolioId}/main")
-	public ResponseEntity<ApiResponse<Object>> updatePortfolioMain(@PathVariable Long portfolioId) {
+	public ResponseEntity<ApiResponse<Object>> updatePortfolioMain(@RequestHeader(name = "memberId") Long memberId,
+																   @PathVariable Long portfolioId) {
 
-		portfoliosService.updatePortfolioMain(portfolioId);
+		portfolioCommandService.updatePortfolioMain(memberId, portfolioId);
 
 		return ResponseEntity.ok(ApiResponse.onSuccess(null));
 	}
 
 	@Operation(summary = "API 명세서 v0.3 line 78", description = "포트폴리오 메모 등록")
 	@PostMapping("/{portfolioId}/memo")
-	public ResponseEntity<ApiResponse<Object>> updatePortfolioMemo(@PathVariable Long portfolioId) {
+	public ResponseEntity<ApiResponse<Object>> updatePortfolioMemo(@RequestHeader(name = "memberId") Long memberId,
+																   @PathVariable Long portfolioId,
+																   @RequestBody MemoRequest req) {
 
-		portfoliosService.updatePortfolioMemo(portfolioId);
+		portfolioCommandService.updatePortfolioMemo(memberId, portfolioId, req);
 
 		return ResponseEntity.ok(ApiResponse.onSuccess(null));
 	}
 
 	@Operation(summary = "API 명세서 v0.3 line 79", description = "포트폴리오 수정")
 	@PutMapping("/{portfolioId}")
-	public ResponseEntity<ApiResponse<Object>> updatePortfolio(@PathVariable Long portfolioId,
-															   @Valid @RequestBody PortfolioRequest portfolioRequest) {
+	public ResponseEntity<ApiResponse<Object>> updatePortfolio(@RequestHeader(name = "memberId") Long memberId,
+															   @PathVariable Long portfolioId,
+															   @Valid @RequestBody PortfolioRequest req) {
 
-		portfoliosService.updatePortfolio(portfolioId, portfolioRequest);
+		portfolioCommandService.updatePortfolio(memberId, portfolioId, req);
 
 		return ResponseEntity.ok(ApiResponse.onSuccess(null));
 	}
 
 	@Operation(summary = "API 명세서 v0.3 line 80", description = "포트폴리오 삭제")
 	@DeleteMapping("/{portfolioId}")
-	public ResponseEntity<ApiResponse<Object>> deletePortfolio(@PathVariable Long portfolioId) {
+	public ResponseEntity<ApiResponse<Object>> deletePortfolio(@RequestHeader(name = "memberId") Long memberId,
+															   @PathVariable Long portfolioId) {
 
-		portfoliosService.deletePortfolio(portfolioId);
+		portfolioCommandService.deletePortfolio(memberId, portfolioId);
 
 		return ResponseEntity.ok(ApiResponse.onSuccess(null));
 	}

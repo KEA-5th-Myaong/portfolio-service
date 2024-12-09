@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import software.amazon.awssdk.core.exception.SdkException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +28,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	// 커스텀 예외 처리
 	@ExceptionHandler
 	public ResponseEntity<Object> HandleCustomException(ApiException ex) {
-		return handleExceptionInternal(ex.getApiCode());
+		return handleExceptionInternal(ex.getApiCode(), ex.getMessage());
 	}
 
 	// @Valid 검증 예외 처리
@@ -59,6 +60,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler
 	public ResponseEntity<Object> HandleDataIntegrityViolationException(DataIntegrityViolationException e) {
 		return handleExceptionInternal(ApiCode.DB_ERROR);
+	}
+
+	// S3 API 예외 처리
+	@ExceptionHandler
+	public ResponseEntity<Object> HandleAwsServiceException(SdkException e) {
+		return handleExceptionInternal(ApiCode.OBJECT_STORAGE_ERROR, e.getMessage());
 	}
 
 	// 그 외 모든 예외 처리

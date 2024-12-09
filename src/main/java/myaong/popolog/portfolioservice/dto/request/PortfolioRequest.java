@@ -1,14 +1,16 @@
 package myaong.popolog.portfolioservice.dto.request;
 
-import jakarta.validation.constraints.NotNull;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
-import myaong.popolog.portfolioservice.dto.PortfolioContent;
+import myaong.popolog.portfolioservice.dto.PortfolioContentDTO;
 
 @Getter
-public class PortfolioRequest extends PortfolioContent {
+@JsonSerialize(as = PortfolioContentDTO.class)
+public class PortfolioRequest extends PortfolioContentDTO {
 
-	@NotNull
+	@NotBlank(message = "포트폴리오 제목을 입력해주세요.")
 	private String title;
-	@NotNull
+	@NotBlank(message = "포트폴리오 관심 직무를 입력해주세요.")
 	private String preferredJob;
 }
